@@ -1,7 +1,8 @@
-class Api::V1::NotificationsController < ApplicationController
+class Api::V1::NotificationsController < Api::ApplicationController
   def index
     @notifications =
       CursorPaginator.new(Notification).generate_page(safe_params.to_h)
+    head :no_content if @notifications.empty?
   end
 
   private
@@ -12,12 +13,5 @@ class Api::V1::NotificationsController < ApplicationController
                             nav_dir: 'after',
                             pointer: '-1'
                            }).permit([:order, :size, cursor: [:nav_dir, :pointer]])
-    end
-
-    def prev_page_link_params(pointer)
-      params.merge(cursor: {
-        nav_dir: 'before',
-        pointer: '12'
-      })
     end
 end
