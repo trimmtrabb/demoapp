@@ -1,24 +1,35 @@
-# README
+## API endpoints for cursor pagination & uploaded video processing.
+##### Rails version: 7.0.4.2
+##### Ruby version: 3.2.0
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### 1. Cursor pagination
+#### An API allowing you to sort & filter records according to your needs.
 
-Things you may want to cover:
+Running seeds will populate the database with 100 notifications:
 
-* Ruby version
+    rails db:seed
 
-* System dependencies
+Start the server by running this command in Terminal:
 
-* Configuration
+    > puma
 
-* Database creation
+The list can be tweaked using parameters, see the example below:
 
-* Database initialization
+    /api/v1/notifications?order=asc&size=5&cursor[nav_dir]=after&cursor[pointer]=12
 
-* How to run the test suite
+Nevertheless, accessing the URL with no parameters will load the list as well,
+as the defaults are set to:
 
-* Services (job queues, cache servers, search engines, etc.)
+    /notifications?order=asc&size=10&cursor[nav_dir]=after&cursor[pointer]=-1
+--------------
 
-* Deployment instructions
+Use
+`order=asc` & `order=desc` to specify order,
+`size=5..100` to specify the limit (whatever limit you choose),
+`cursor[nav_dir]=before` or `cursor[nav_dir]=after` (here you require the previous / next page)
+`cursor[pointer]=12` to define the record serving as a cursor, using its ID.
 
-* ...
+So, when you want to request the next 5 records following the record with ID=15,
+you simply send the following params:
+
+    /notifications?size=5&cursor[nav_dir]=after&cursor[pointer]=15
