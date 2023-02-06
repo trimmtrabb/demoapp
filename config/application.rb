@@ -12,12 +12,6 @@ module Demoapp
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     config.load_defaults 7.0
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
-      end
-    end
     config.api_only = true
     #
     # config.time_zone = "Central Time (US & Canada)"
