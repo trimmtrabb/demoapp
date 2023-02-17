@@ -1,7 +1,7 @@
 class Product < ApplicationRecord
-  has_many_attached :videos
+  has_one_attached :video
 
-  # def video_urls
-  #   videos.map { |v| Rails.application.routes.url_helpers.url_for(v) }
-  # end
+  def video_url
+    Rails.application.routes.url_helpers.url_for(video) if video.attached?
+  end
 end

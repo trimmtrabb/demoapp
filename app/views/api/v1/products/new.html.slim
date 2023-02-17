@@ -1,0 +1,13 @@
+h3 Form for new product with a video attachment (using Form Data)
+
+= form_for product, url: api_v1_products_path, html: { method: :post, multipart: true } do |f|
+  p
+    => f.label :name
+    = f.text_field :name, value: "vid"
+  p
+    => f.label :description
+    = f.text_field :description, value: "a really cool description"
+  p
+    => f.label :preview
+    = f.file_field :video, accept: "video/*"
+  div = f.submit
